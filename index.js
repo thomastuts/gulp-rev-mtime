@@ -37,10 +37,13 @@ module.exports = function (options) {
         $script.attr('src',  $script.attr('src') + '?' + options.suffix + '=' + +stats.mtime);
       }
 
-      console.log($.html());
+      file.contents = new Buffer($.html());
     }
     catch (err) {
       this.emit('error', new gutil.PluginError('gulp-rev-mtime', err));
     }
+
+    this.push(file);
+    return cb();
   })
 };
