@@ -10,10 +10,22 @@ module.exports = function (options) {
 
     var defaultOptions = {
       cwd: '',
-      suffix: 'v'
+      suffix: 'v',
+      fileTypes: ['js', 'css']
     };
 
     options = _.merge(defaultOptions, options);
+
+    var elementAttributes = {
+      js: {
+        name: 'script',
+        srcAttribute: 'src'
+      },
+      css: {
+        name: 'link',
+        srcAttribute: 'href'
+      }
+    };
 
     if (file.isNull()) {
       this.push(file);
@@ -27,14 +39,20 @@ module.exports = function (options) {
 
     try {
       var $ = cheerio.load(file.contents.toString());
-      var $scripts = $('script');
 
-      for (var i = 0; i < $scripts.length; i++) {
-        var $script = $scripts.eq(i);
-        var src = $script.attr('src');
+      for (var i = 0; i < options.fileTypes.length; i++) {
+        var fileType = options.fileTypes[i];
+        var attributes = elementAttributes[fileType];
 
-        var stats = fs.statSync(path.join(options.cwd, src));
-        $script.attr('src',  $script.attr('src') + '?' + options.suffix + '=' + +stats.mtime);
+        var $assets = $(attributes.name);
+
+        for (var j = 0; j < $assets.length; j++) {
+          var $asset = $assets.eq(j);
+          var src = $asset.attr(attributes.srcAttribute);
+
+          var stats = fs.statSync(path.join(options.cwd, src));
+          $asset.attr(attributes.srcAttribute,  $asset.attr(attributes.srcAttribute) + '?' + options.suffix + '=' + +stats.mtime);
+        }
       }
 
       file.contents = new Buffer($.html());
