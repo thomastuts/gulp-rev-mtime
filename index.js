@@ -3,6 +3,7 @@ var through = require('through2');
 var cheerio = require('cheerio');
 var gutil = require('gulp-util');
 var fs = require('fs');
+var url = require('url');
 var _ = require('lodash');
 
 module.exports = function (options) {
@@ -49,9 +50,10 @@ module.exports = function (options) {
         for (var j = 0; j < $assets.length; j++) {
           var $asset = $assets.eq(j);
           var src = $asset.attr(attributes.srcAttribute);
+          src = url.parse(src).pathname;
 
           var stats = fs.statSync(path.join(options.cwd, src));
-          $asset.attr(attributes.srcAttribute,  $asset.attr(attributes.srcAttribute) + '?' + options.suffix + '=' + +stats.mtime);
+          $asset.attr(attributes.srcAttribute,  src + '?' + options.suffix + '=' + +stats.mtime);
         }
       }
 
