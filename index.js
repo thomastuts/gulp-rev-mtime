@@ -7,15 +7,16 @@ var url = require('url');
 var _ = require('lodash');
 
 module.exports = function (options) {
+
+  var defaultOptions = {
+    cwd: '',
+    suffix: 'v',
+    fileTypes: ['js', 'css']
+  };
+
+  options = _.merge(defaultOptions, options);
+
   return through.obj(function (file, enc, cb) {
-
-    var defaultOptions = {
-      cwd: '',
-      suffix: 'v',
-      fileTypes: ['js', 'css']
-    };
-
-    options = _.merge(defaultOptions, options);
 
     var elementAttributes = {
       js: {
