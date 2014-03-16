@@ -1,6 +1,6 @@
 {
   "name": "gulp-rev-mtime",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Appends a file's modified UNIX timestamp to a file URL to cache assets",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,6 @@
   "homepage": "https://github.com/thomastuts/gulp-rev-mtime",
   "dependencies": {
     "gulp-util": "~2.2.14",
-    "gulp": "~3.5.2",
     "through2": "~0.4.1",
     "cheerio": "~0.13.1",
     "lodash": "~2.4.1"
