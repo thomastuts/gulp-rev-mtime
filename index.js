@@ -50,11 +50,15 @@ module.exports = function (options) {
 
         for (var j = 0; j < $assets.length; j++) {
           var $asset = $assets.eq(j);
-          var src = $asset.attr(attributes.srcAttribute);
-          src = url.parse(src).pathname;
 
-          var stats = fs.statSync(path.join(options.cwd, src));
-          $asset.attr(attributes.srcAttribute,  src + '?' + options.suffix + '=' + +stats.mtime);
+          var src = $asset.attr(attributes.srcAttribute);
+
+          if (src) {
+            src = url.parse(src).pathname;
+
+            var stats = fs.statSync(path.join(options.cwd, src));
+            $asset.attr(attributes.srcAttribute,  src + '?' + options.suffix + '=' + +stats.mtime);
+          }
         }
       }
 
