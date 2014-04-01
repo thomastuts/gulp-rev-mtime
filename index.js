@@ -53,7 +53,7 @@ module.exports = function (options) {
 
           var src = $asset.attr(attributes.srcAttribute);
 
-          if (src) {
+          if (src && !src.match(/.*(\/\/).*/)) {
             src = url.parse(src).pathname;
 
             var stats = fs.statSync(path.join(options.cwd, src));
