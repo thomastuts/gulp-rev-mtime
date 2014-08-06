@@ -56,7 +56,7 @@ module.exports = function (options) {
           if (src && !src.match(/.*(\/\/).*/)) {
             src = url.parse(src).pathname;
 
-            var stats = fs.statSync(path.join(options.cwd, src));
+            var stats = fs.statSync(path.join(options.cwd, path.dirname(file.relative), src));
             $asset.attr(attributes.srcAttribute,  src + '?' + options.suffix + '=' + +stats.mtime);
           }
         }
