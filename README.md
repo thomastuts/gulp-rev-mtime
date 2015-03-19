@@ -1,7 +1,9 @@
 gulp-rev-mtime
 ==============
-
 > Appends a file's modified UNIX timestamp to a file URL to cache assets
+
+# DEPRECATED
+## This Gulp plugin is deprecated. Please use https://github.com/sindresorhus/gulp-rev instead for a much more robust solution.
 
 ## Install
 
